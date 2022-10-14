@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Proveedor;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -16,6 +17,7 @@ class ProductoFactory extends Factory
      */
     public function definition()
     {
+        $proveedor = Proveedor::all()->random()->id;
         $precio_compra = fake()->randomNumber(5);
         $precio_venta = $precio_compra + ($precio_compra * 0.25); 
         return [
@@ -25,7 +27,8 @@ class ProductoFactory extends Factory
             'precio_venta' => $precio_venta,
             'precio_compra' => $precio_compra,
             'activo' => fake()->boolean(),
-            'en_stock' => fake()->boolean()
+            'en_stock' => fake()->boolean(),
+            'proveedor_id' => $proveedor
         ];
     }
 }

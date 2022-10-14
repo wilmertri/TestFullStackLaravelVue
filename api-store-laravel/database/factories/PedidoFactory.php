@@ -18,7 +18,7 @@ class PedidoFactory extends Factory
     {
         return [
             'codigo' => fake()->unique()->randomNumber(8), 
-            'fecha_entrega' => fake()->date('Y-m-d', '2023-06-30'), 
+            'fecha_entrega' => fake()->dateTimeBetween('now', '2023-06-30'), 
             'direccion_entrega' => fake()->address(), 
             'prioridad' => fake()->numberBetween(1, 5), 
             'entregado' => fake()->boolean()

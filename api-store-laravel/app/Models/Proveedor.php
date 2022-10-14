@@ -12,8 +12,8 @@ class Proveedor extends Model
     protected $table = "proveedores";
     protected $fillable = ['codigo', 'nombre', 'direccion', 'telefono', 'email'];
 
-    public function inventario()
+    public function productos()
     {
-        return $this->belongsTo('App\Models\Inventario', 'proveedor_id');
+        return $this->hasMany('App\Models\Producto', 'proveedor_id');
     }
 }

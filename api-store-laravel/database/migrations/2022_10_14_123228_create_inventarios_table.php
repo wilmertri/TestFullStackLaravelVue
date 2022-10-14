@@ -17,7 +17,6 @@ return new class extends Migration
             $table->id();
             $table->mediumInteger('cantidad')->default(1);
             $table->foreignId('producto_id')->constrained('productos');
-            $table->foreignId('proveedor_id')->constrained('proveedores');
             $table->timestamps();
         });
     }

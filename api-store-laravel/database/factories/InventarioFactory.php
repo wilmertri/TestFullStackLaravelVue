@@ -18,12 +18,10 @@ class InventarioFactory extends Factory
      */
     public function definition()
     {
-        $producto = Producto::all()->random()->id;
-        $proveedor = Proveedor::all()->random()->id;
+        $producto = Producto::whereDoesntHave('inventarios')->get()->random()->id;
         return [
-            'cantidad' => fake()->numberBetween(1, 50), 
-            'producto_id' => $producto,  
-            'proveedor_id' => $proveedor
+            'cantidad' => fake()->numberBetween(0, 50), 
+            'producto_id' => $producto
         ];
     }
 }

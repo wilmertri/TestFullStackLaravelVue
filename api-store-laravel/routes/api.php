@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Api\V1\PedidoController;
+use App\Http\Controllers\Api\V1\ProductoController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -16,4 +18,12 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+//api/v1/
+Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\Api\V1'], function() {
+    Route::apiResource('productos', ProductoController::class);
+    Route::apiResource('pedidos', PedidoController::class);
+    Route::get('pedidos/buscar-pedido/{fecha}', [PedidoController::class, 'getPedidoPorFecha'])->name('pedidos.buscar-pedido');
+    Route::get('pedidos/alistamiento/{pedido}', [PedidoController::class, 'getAlistamientoPedidos'])->name('pedidos.alistamiento');
 });

@@ -10,15 +10,11 @@ class Inventario extends Model
     use HasFactory;
 
     protected $table = "inventarios";
-    protected $fillable = ['cantidad', 'producto_id', 'proveedor_id'];
+    protected $fillable = ['cantidad', 'producto_id'];
 
     public function productos()
     {
-        return $this->hasMany('App\Models\Producto', 'producto_id');
+        return $this->belongsTo('App\Models\Producto', 'producto_id');
     }
 
-    public function proveedores()
-    {
-        return $this->hasMany('App\Models\Proveedor', 'proveedor_id');
-    }
 }

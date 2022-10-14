@@ -16,10 +16,10 @@ class PedidoSeeder extends Seeder
      */
     public function run()
     {
-        Pedido::factory()->count(100)->create()->each(
+        Pedido::factory()->count(200)->create()->each(
             function($pedido){
                 $productos = Producto::all()->random(mt_rand(1, 5))->pluck('id');
-                $pedido->productos()->attach($productos);
+                $pedido->productos()->attach($productos, ['cantidad' => fake()->numberBetween(0, 50)]);
             }
         );
     }
