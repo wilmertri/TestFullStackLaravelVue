@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\PedidoCollection;
+use App\Http\Resources\PedidoResource;
 use App\Models\Pedido;
 use App\Models\Producto;
 use App\Models\Inventario;
@@ -17,7 +19,7 @@ class PedidoController extends Controller
      */
     public function index()
     {
-        return Pedido::with('productos')->get();
+        return new PedidoCollection(Pedido::with('productos')->orderBy('fecha_entrega')->orderBy('prioridad')->get());
     }
 
     /**
@@ -47,9 +49,9 @@ class PedidoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Pedido $pedido)
     {
-        //
+        return new PedidoResource($pedido);
     }
 
     /**
@@ -89,12 +91,11 @@ class PedidoController extends Controller
 
     public function getPedidoPorFecha(Request $request, $fecha)
     {
-        return Pedido::where('fecha_entrega', $fecha)->with('productos')->get();
+        return new PedidoCollection(Pedido::where('fecha_entrega', $fecha)->with('productos')->get());
     }
 
     public function getAlistamientoPedidos(Request $request, Pedido $pedido)
     {
-        $data = [];
         $productos = $pedido->productos;
         foreach ($productos as $key => $producto) {
             $cantidad = 0;
@@ -102,14 +103,19 @@ class PedidoController extends Controller
             {    
                 foreach ($producto->inventarios as $key => $inventario) 
                 {
-
                     $cantidad += $inventario->cantidad;    
                 }
                 
             }
+            $abastecer = "No";
+            if($producto->pivot->cantidad > $cantidad)
+            {
+                $abastecer = "Si";
+            }
             $data[]=[
                 'producto' => $producto,
-                'cantidad' => $cantidad
+                'cantidad' => $cantidad,
+                'abastecer' => $abastecer
             ];
         }
 

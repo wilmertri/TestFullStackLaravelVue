@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\V1;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\ProductoCollection;
 use App\Models\Producto;
 
 class ProductoController extends Controller
@@ -15,7 +16,7 @@ class ProductoController extends Controller
      */
     public function index()
     {
-        return Producto::all();
+        return new ProductoCollection(Producto::with('proveedor', 'inventarios')->get());
     }
 
     /**
