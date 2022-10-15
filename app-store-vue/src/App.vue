@@ -18,7 +18,7 @@
 					<router-link to="/productos" class="navbar-item"> Productos </router-link> 
 					<div class="navbar-item">
 						<div class="buttons">
-							<router-link to="/" class="button is-light"> Log in</router-link>
+							<router-link to="/log-in" class="button is-light"> Log in</router-link>
 						</div>
 					</div>
 				</div>
