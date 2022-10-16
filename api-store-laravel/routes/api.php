@@ -28,5 +28,6 @@ Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\Api\V1'], f
         Route::post('logout', 'logout');
         Route::post('refresh', 'refresh');
         Route::post('register', 'register');
+        Route::get('user', 'user');
     });
 });

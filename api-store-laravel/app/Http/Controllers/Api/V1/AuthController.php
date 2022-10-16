@@ -89,4 +89,9 @@ class AuthController extends Controller
             ]
         ]);
     }
+
+    public function user()
+    {
+        return response()->json(Auth::user());
+    }
 }
