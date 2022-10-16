@@ -3,10 +3,16 @@ import HomeView from '../views/HomeView.vue'
 import Producto from '../views/ProductoView.vue'
 import Productos from '../views/ProductosView.vue'
 import Login from '../views/LoginView.vue'
+import IndexView from '../views/IndexView.vue'
 
 const routes = [
   {
     path: '/',
+    name: 'index',
+    component: IndexView
+  },
+  {
+    path: '/home',
     name: 'home',
     component: HomeView
   },

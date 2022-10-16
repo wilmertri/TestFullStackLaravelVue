@@ -1,15 +1,5 @@
 <template>
     <div class="home">
-		<section class="hero is-small is-dark">
-			<div class="hero-body has-text-centered">
-				<p class="title">
-					Bienvenido!
-				</p>
-				<p class="subtitle">
-					El mejor sitio de administración
-				</p>
-			</div>
-		</section>
 		<div class="container has-text-centered">
 			<div class='columns is-mobile is-centered'>
 				<div class='column is-10'>

@@ -63,7 +63,9 @@ export default {
 	data:() => ({
 		'email': "",
         'password': "",
-        'error': false
+        'error': false,
+        'user': "",
+        'token': ""
 	}),	
     components: {
     },
@@ -71,12 +73,12 @@ export default {
 		document.title = 'Login | Store'
 	},
 	methods:{
-		getLogin() {
-			axios.get(`api/v1/login`).then(response => {
-				
-			}).catch(error => {
-				console.log(error);
-			});
+		async getLogin() {
+            const user = { email: this.email, password: this.password };
+            const response = await axios.post(`api/v1/login`, user);
+            localStorage.setItem('token', response.data.authorisation.token);
+            this.$store.dispatch('user', response.data.user);
+            this.$router.push('/home');
 		}
 	}
 }
