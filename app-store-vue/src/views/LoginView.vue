@@ -74,11 +74,17 @@ export default {
 	},
 	methods:{
 		async getLogin() {
-            const user = { email: this.email, password: this.password };
-            const response = await axios.post(`api/v1/login`, user);
-            localStorage.setItem('token', response.data.authorisation.token);
-            this.$store.dispatch('user', response.data.user);
-            this.$router.push('/home');
+            try {
+                const user = { email: this.email, password: this.password };
+                const response = await axios.post(`api/v1/login`, user);
+                localStorage.setItem('token', response.data.authorisation.token);
+                this.$store.dispatch('user', response.data.user);
+                this.$router.push('/home');
+            } catch(err){
+                this.email = "";
+                this.password = "";
+                this.error = true;
+            }
 		}
 	}
 }

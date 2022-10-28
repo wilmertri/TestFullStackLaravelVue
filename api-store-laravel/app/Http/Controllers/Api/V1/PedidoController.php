@@ -19,7 +19,7 @@ class PedidoController extends Controller
      */
     public function index()
     {
-        return new PedidoCollection(Pedido::with('productos')->orderBy('fecha_entrega')->orderBy('prioridad')->get());
+        return new PedidoCollection(Pedido::with('productos')->orderBy('fecha_entrega')->orderBy('prioridad')->paginate(10));
     }
 
     /**
@@ -91,7 +91,7 @@ class PedidoController extends Controller
 
     public function getPedidoPorFecha(Request $request, $fecha)
     {
-        return new PedidoCollection(Pedido::where('fecha_entrega', $fecha)->with('productos')->get());
+        return new PedidoCollection(Pedido::where('fecha_entrega', $fecha)->with('productos')->paginate(10));
     }
 
     public function getAlistamientoPedidos(Request $request, Pedido $pedido)

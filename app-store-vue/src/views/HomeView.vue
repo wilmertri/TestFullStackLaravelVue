@@ -17,7 +17,8 @@
 							</div>
 						</form>
 					</div>
-					<table class="table has-text-centered is-fullwidth is-bordered is-centered">
+					<pagination v-bind:pagedata="ultimosPedidos.meta" v-on:page-clicked="getUltimosPedidos"></pagination>
+					<table class="table has-text-centered is-fullwidth is-bordered is-centered mt-3">
 						<thead>
 							<tr>
 								<th>Código</th>
@@ -29,7 +30,7 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr v-for="pedido in ultimosPedidos" :key="pedido.id">
+							<tr v-for="pedido in ultimosPedidos.data" :key="pedido.id">
 								<td>{{pedido.codigo}}</td>
 								<td>{{pedido.fecha_entrega}}</td>
 								<td>{{pedido.direccion_entrega}}</td>
@@ -46,37 +47,39 @@
 </template>
 
 <script>
+import pagination from 'laravel-vue-bulma-pagination'
 import axios from 'axios'
 export default {
     name: 'HomeView',
 	data(){
 		return {
-			ultimosPedidos: [],
+			ultimosPedidos: {},
 			fecha: ""
 		}
 	},	
     components: {
+		pagination
     },
 	mounted(){
 		this.getUltimosPedidos();
 		document.title = 'Home | Store'
 	},
 	methods:{
-		getUltimosPedidos() {
-			axios.get('api/v1/pedidos').then(response => {
-				this.ultimosPedidos = response.data.data
-				this.links = response.data.links
-				this.metaLinks = response.data.meta
+		getUltimosPedidos(page = 1) {
+			axios.get('api/v1/pedidos?page='+page).then(response => {
+				this.ultimosPedidos = response.data
 			}).catch(error => {
-				console.log(error);
+				console.log(error.response.status);
 			});
 		},
-		getPedidoPorFecha(){
-			axios.get('api/v1/pedidos/buscar-pedido/' + this.fecha).then(response => {
-				this.ultimosPedidos = response.data.data
-				this.links = response.data.links
-				this.metaLinks = response.data.meta
+		getPedidoPorFecha(page = 1){
+			axios.get('api/v1/pedidos/buscar-pedido/' + this.fecha + '?page='+page).then(response => {
+				this.ultimosPedidos = response.data
 			}).catch(error => {
+				if(error.response.status === 401)
+				{
+					this.$router.push('/');
+				}
 				console.log(error);
 			});
 		}
